@@ -1,0 +1,23 @@
+# Environment variables
+.env
+.env.backup
+.env.production
+
+# Composer dependencies
+/vendor/
+
+# Storage & Temporary files
+/storage/logs/*.log
+/storage/backups/*.sql
+/storage/uploads/*
+!/storage/uploads/.gitkeep
+/storage/cache/*
+!/storage/cache/.gitkeep
+
+# OS & Editor files
+.DS_Store
+Thumbs.db
+.idea/
+.vscode/
+*.swp
+*.swo

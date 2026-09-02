@@ -1,0 +1,414 @@
+<!-- 1. Hero Slideshow Section (Swiper) -->
+<section class="hero-section position-relative">
+    <div class="swiper hero-swiper">
+        <div class="swiper-wrapper">
+            <?php if (!empty($heroSlides)): ?>
+                <?php foreach ($heroSlides as $slide): ?>
+                    <div class="swiper-slide hero-slide" style="background-image: url('<?= asset('img/hero_bg_default.jpg') ?>');">
+                        <div class="hero-overlay" style="opacity: <?= e($slide['overlay_opacity']) ?>;"></div>
+                        <div class="container position-relative z-2 py-5">
+                            <div class="row align-items-center">
+                                <div class="col-lg-8 col-md-10 text-<?= e($slide['text_alignment'] ?? 'left') ?>">
+                                    <span class="badge bg-gold text-white mb-2 px-3 py-1 rounded-pill fw-semibold">
+                                        <i class="bi bi-shield-check me-1"></i> <?= e($slide['subtitle'] ?? 'สอ.สธ.ระยอง') ?>
+                                    </span>
+                                    <h1 class="hero-title"><?= e($slide['title']) ?></h1>
+                                    <p class="hero-subtitle mb-4"><?= e($slide['description'] ?? '') ?></p>
+                                    <div class="d-flex flex-wrap gap-3 <?= $slide['text_alignment'] === 'center' ? 'justify-content-center' : '' ?>">
+                                        <?php if (!empty($slide['button_text']) && !empty($slide['button_url'])): ?>
+                                            <a href="<?= url($slide['button_url']) ?>" target="<?= e($slide['button_target']) ?>" class="btn btn-primary btn-lg px-4 shadow">
+                                                <?= e($slide['button_text']) ?> <i class="bi bi-arrow-right ms-2"></i>
+                                            </a>
+                                        <?php endif; ?>
+                                        <a href="<?= url('calculator') ?>" class="btn btn-outline-light btn-lg px-4">
+                                            <i class="bi bi-calculator me-1"></i> คำนวณเงินกู้
+                                        </a>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                <?php endforeach; ?>
+            <?php else: ?>
+                <div class="swiper-slide hero-slide bg-navy">
+                    <div class="container position-relative z-2 py-5 text-white">
+                        <h1 class="hero-title">มั่นคง โปร่งใส ทันสมัย เพื่อคุณภาพชีวิตที่ดีของสมาชิก</h1>
+                        <p class="hero-subtitle">สหกรณ์ออมทรัพย์สาธารณสุขระยอง จำกัด</p>
+                    </div>
+                </div>
+            <?php endif; ?>
+        </div>
+        <div class="swiper-pagination"></div>
+        <div class="swiper-button-next d-none d-md-flex"></div>
+        <div class="swiper-button-prev d-none d-md-flex"></div>
+    </div>
+</section>
+
+<!-- 2. Quick Services Bar (1-2 Clicks Access) -->
+<section class="container">
+    <div class="quick-services-card">
+        <div class="row row-cols-2 row-cols-sm-3 row-cols-md-6 g-3 justify-content-center">
+            <div class="col">
+                <a href="<?= url('deposits') ?>" class="quick-service-item">
+                    <div class="quick-service-icon"><i class="bi bi-piggy-bank"></i></div>
+                    <span class="quick-service-label">เงินฝาก</span>
+                </a>
+            </div>
+            <div class="col">
+                <a href="<?= url('loans') ?>" class="quick-service-item">
+                    <div class="quick-service-icon"><i class="bi bi-cash-stack"></i></div>
+                    <span class="quick-service-label">เงินกู้</span>
+                </a>
+            </div>
+            <div class="col">
+                <a href="<?= url('calculator') ?>" class="quick-service-item">
+                    <div class="quick-service-icon"><i class="bi bi-calculator"></i></div>
+                    <span class="quick-service-label">คำนวณเงินกู้</span>
+                </a>
+            </div>
+            <div class="col">
+                <a href="<?= url('rates') ?>" class="quick-service-item">
+                    <div class="quick-service-icon"><i class="bi bi-percent"></i></div>
+                    <span class="quick-service-label">อัตราดอกเบี้ย</span>
+                </a>
+            </div>
+            <div class="col">
+                <a href="<?= url('welfare') ?>" class="quick-service-item">
+                    <div class="quick-service-icon"><i class="bi bi-heart-pulse"></i></div>
+                    <span class="quick-service-label">สวัสดิการ</span>
+                </a>
+            </div>
+            <div class="col">
+                <a href="<?= url('eservice') ?>" class="quick-service-item">
+                    <div class="quick-service-icon" style="background: linear-gradient(135deg, #073B74 0%, #0B5ED7 100%); color: #fff;">
+                        <i class="bi bi-person-circle"></i>
+                    </div>
+                    <span class="quick-service-label text-navy fw-bold">E-Service</span>
+                </a>
+            </div>
+        </div>
+    </div>
+</section>
+
+<!-- 3. Financial Rates Dashboard Section -->
+<section class="py-5">
+    <div class="container">
+        <div class="row align-items-center mb-4">
+            <div class="col-md-8">
+                <span class="text-gold fw-bold text-uppercase small"><i class="bi bi-graph-up me-1"></i> อัตราดอกเบี้ยปัจจุบัน</span>
+                <h2 class="fw-bold text-navy mb-1">อัตราดอกเบี้ยเงินฝากและเงินกู้</h2>
+                <p class="text-muted small mb-0">ข้อมูลอัตราดอกเบี้ยล่าสุดจากระบบฐานข้อมูลสหกรณ์ออมทรัพย์สาธารณสุขระยอง จำกัด</p>
+            </div>
+            <div class="col-md-4 text-md-end mt-3 mt-md-0">
+                <a href="<?= url('rates') ?>" class="btn btn-outline-primary btn-sm">
+                    ดูประวัติการเปลี่ยนแปลงทั้งหมด <i class="bi bi-arrow-right ms-1"></i>
+                </a>
+            </div>
+        </div>
+
+        <div class="row g-4">
+            <!-- Deposit Rates Card -->
+            <div class="col-lg-6">
+                <div class="coop-card p-4 h-100">
+                    <div class="d-flex align-items-center justify-content-between mb-3 pb-2 border-bottom">
+                        <div class="d-flex align-items-center">
+                            <div class="bg-light-blue text-primary rounded-circle p-2 me-2">
+                                <i class="bi bi-piggy-bank-fill fs-4"></i>
+                            </div>
+                            <div>
+                                <h5 class="fw-bold text-navy mb-0">อัตราดอกเบี้ยเงินฝาก</h5>
+                                <small class="text-muted">ผลตอบแทนสูง ปลอดภาษี</small>
+                            </div>
+                        </div>
+                        <span class="badge bg-success">อัปเดตล่าสุด</span>
+                    </div>
+
+                    <div class="table-responsive">
+                        <table class="table rate-table mb-0">
+                            <thead>
+                                <tr>
+                                    <th>ประเภทเงินฝาก</th>
+                                    <th class="text-end">อัตราดอกเบี้ยต่อปี</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <?php foreach ($depositRates as $dr): ?>
+                                    <tr>
+                                        <td>
+                                            <div class="fw-bold text-navy"><?= e($dr['product_name']) ?></div>
+                                            <small class="text-muted">มีผล <?= thai_date($dr['effective_date']) ?></small>
+                                        </td>
+                                        <td class="text-end">
+                                            <span class="rate-badge rate-badge-gold">
+                                                <?= number_format((float)$dr['rate'], 2) ?>%
+                                            </span>
+                                        </td>
+                                    </tr>
+                                <?php endforeach; ?>
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Loan Rates Card -->
+            <div class="col-lg-6">
+                <div class="coop-card p-4 h-100">
+                    <div class="d-flex align-items-center justify-content-between mb-3 pb-2 border-bottom">
+                        <div class="d-flex align-items-center">
+                            <div class="bg-light-blue text-primary rounded-circle p-2 me-2">
+                                <i class="bi bi-cash-coin fs-4"></i>
+                            </div>
+                            <div>
+                                <h5 class="fw-bold text-navy mb-0">อัตราดอกเบี้ยเงินกู้</h5>
+                                <small class="text-muted">ดอกเบี้ยต่ำ แบบลดต้นลดดอก</small>
+                            </div>
+                        </div>
+                        <a href="<?= url('calculator') ?>" class="btn btn-sm btn-outline-primary">
+                            <i class="bi bi-calculator"></i> ลองคำนวณ
+                        </a>
+                    </div>
+
+                    <div class="table-responsive">
+                        <table class="table rate-table mb-0">
+                            <thead>
+                                <tr>
+                                    <th>ประเภทเงินกู้</th>
+                                    <th class="text-end">อัตราดอกเบี้ยต่อปี</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <?php foreach ($loanRates as $lr): ?>
+                                    <tr>
+                                        <td>
+                                            <div class="fw-bold text-navy"><?= e($lr['product_name']) ?></div>
+                                            <small class="text-muted">มีผล <?= thai_date($lr['effective_date']) ?></small>
+                                        </td>
+                                        <td class="text-end">
+                                            <span class="rate-badge">
+                                                <?= number_format((float)$lr['rate'], 2) ?>%
+                                            </span>
+                                        </td>
+                                    </tr>
+                                <?php endforeach; ?>
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+
+<!-- 4. Interactive Loan Calculator Preview Widget -->
+<section class="py-5 bg-light">
+    <div class="container">
+        <div class="calc-card p-4 p-md-5">
+            <div class="row g-4 align-items-center">
+                <div class="col-lg-6">
+                    <span class="text-gold fw-bold small text-uppercase"><i class="bi bi-calculator me-1"></i> วางแผนทางการเงิน</span>
+                    <h2 class="fw-bold text-navy mb-3">โปรแกรมคำนวณเงินกู้ออนไลน์</h2>
+                    <p class="text-muted mb-4">
+                        ช่วยคุณประเมินภาระการผ่อนชำระค่างวดรายเดือนและดอกเบี้ยรวมได้อย่างแม่นยำ ด้วยระบบคำนวณแบบลดต้นลดดอกมาตรฐานสถาบันการเงิน
+                    </p>
+
+                    <form id="homeQuickCalcForm" class="row g-3">
+                        <div class="col-md-12">
+                            <label class="form-label fw-bold small">เลือกประเภทสินเชื่อ</label>
+                            <select class="form-select" id="calcProduct">
+                                <option value="" data-rate="5.50" data-max-term="240">เงินกู้สามัญ (อัตราดอกเบี้ย 5.50% ต่อปี)</option>
+                                <option value="" data-rate="5.75" data-max-term="12">เงินกู้เพื่อเหตุฉุกเฉิน (5.75% ต่อปี)</option>
+                                <option value="" data-rate="4.75" data-max-term="360">เงินกู้พิเศษเพื่อเคหะสงเคราะห์ (4.75% ต่อปี)</option>
+                            </select>
+                        </div>
+                        <div class="col-md-6">
+                            <label class="form-label fw-bold small">วงเงินกู้ (บาท)</label>
+                            <input type="number" class="form-control" id="calcPrincipal" value="500000" step="10000" min="10000">
+                        </div>
+                        <div class="col-md-6">
+                            <label class="form-label fw-bold small">ระยะเวลาผ่อน (งวด/เดือน)</label>
+                            <input type="number" class="form-control" id="calcTerm" value="60" min="1" max="360">
+                        </div>
+                        <input type="hidden" id="calcRate" value="5.50">
+                        <input type="hidden" id="calcMethod" value="effective">
+                    </form>
+                </div>
+
+                <div class="col-lg-6">
+                    <div class="calc-result-box shadow-sm">
+                        <h6 class="text-light-blue fw-semibold mb-1">ประมาณการค่างวดรายเดือน</h6>
+                        <div class="calc-result-figure mb-3" id="calcResultMonthly">0.00 บาท</div>
+
+                        <div class="row g-2 border-top border-light border-opacity-25 pt-3">
+                            <div class="col-6">
+                                <small class="text-light-blue d-block">เงินต้นทั้งหมด</small>
+                                <span class="fw-bold fs-6" id="calcResultPrincipal">0.00 บาท</span>
+                            </div>
+                            <div class="col-6">
+                                <small class="text-light-blue d-block">ดอกเบี้ยรวมโดยประมาณ</small>
+                                <span class="fw-bold fs-6 text-warning" id="calcResultInterest">0.00 บาท</span>
+                            </div>
+                        </div>
+
+                        <div class="mt-4 pt-2">
+                            <a href="<?= url('calculator') ?>" class="btn btn-gold w-100 py-2">
+                                <i class="bi bi-file-earmark-text me-1"></i> ดูตารางผ่อนชำระละเอียด (Amortization Schedule)
+                            </a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+
+<!-- 5. Executive Financial Highlights Section -->
+<?php if ($latestStats): ?>
+<section class="stats-section">
+    <div class="container position-relative z-2">
+        <div class="text-center mb-5">
+            <span class="badge bg-gold text-white px-3 py-1 rounded-pill mb-2">สถิติทางการเงิน</span>
+            <h2 class="text-white fw-bold">ฐานะทางการเงินที่มั่นคงและเติบโตอย่างยั่งยืน</h2>
+            <p class="text-light-blue small mb-0">ข้อมูล ณ เดือนมิถุนายน <?= e($latestStats['year']) ?></p>
+        </div>
+
+        <div class="row g-4">
+            <div class="col-lg-3 col-6">
+                <div class="stat-box">
+                    <div class="stat-icon"><i class="bi bi-people-fill"></i></div>
+                    <div class="stat-number"><?= number_format($latestStats['total_members']) ?></div>
+                    <div class="stat-label">สมาชิกทั้งหมด (คน)</div>
+                </div>
+            </div>
+            <div class="col-lg-3 col-6">
+                <div class="stat-box">
+                    <div class="stat-icon"><i class="bi bi-wallet2"></i></div>
+                    <div class="stat-number"><?= number_format((float)$latestStats['total_assets'] / 1000000000, 2) ?> พันล้าน</div>
+                    <div class="stat-label">สินทรัพย์รวม (บาท)</div>
+                </div>
+            </div>
+            <div class="col-lg-3 col-6">
+                <div class="stat-box">
+                    <div class="stat-icon"><i class="bi bi-piggy-bank"></i></div>
+                    <div class="stat-number"><?= number_format((float)$latestStats['total_deposits'] / 1000000000, 2) ?> พันล้าน</div>
+                    <div class="stat-label">เงินฝากรวม (บาท)</div>
+                </div>
+            </div>
+            <div class="col-lg-3 col-6">
+                <div class="stat-box">
+                    <div class="stat-icon"><i class="bi bi-award-fill"></i></div>
+                    <div class="stat-number text-gold"><?= number_format((float)$latestStats['dividend_rate'], 2) ?>%</div>
+                    <div class="stat-label">อัตราเงินปันผลล่าสุด</div>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+<?php endif; ?>
+
+<!-- 6. Latest News & Announcements Section -->
+<section class="py-5">
+    <div class="container">
+        <div class="d-flex justify-content-between align-items-center mb-4">
+            <div>
+                <span class="text-gold fw-bold text-uppercase small"><i class="bi bi-newspaper me-1"></i> ข่าวสารและกิจกรรม</span>
+                <h2 class="fw-bold text-navy mb-0">ข่าวประชาสัมพันธ์ล่าสุด</h2>
+            </div>
+            <a href="<?= url('news') ?>" class="btn btn-outline-primary btn-sm">
+                ดูข่าวทั้งหมด <i class="bi bi-chevron-right ms-1"></i>
+            </a>
+        </div>
+
+        <div class="row g-4">
+            <?php foreach ($latestNews as $news): ?>
+                <div class="col-lg-4 col-md-6">
+                    <div class="coop-card h-100 d-flex flex-column">
+                        <div class="position-relative bg-light" style="height: 200px; overflow: hidden;">
+                            <img src="<?= asset('img/news_placeholder.jpg') ?>" class="w-100 h-100 object-fit-cover" alt="<?= e($news['title']) ?>">
+                            <span class="position-absolute top-0 start-0 m-3 badge bg-navy">
+                                <?= e($news['category_name']) ?>
+                            </span>
+                        </div>
+                        <div class="p-4 d-flex flex-column flex-grow-1">
+                            <div class="text-muted small mb-2">
+                                <i class="bi bi-calendar3 me-1"></i> <?= thai_date($news['publish_at']) ?>
+                            </div>
+                            <h5 class="fw-bold text-navy mb-2 line-clamp-2">
+                                <a href="<?= url('news/' . $news['slug']) ?>" class="text-navy text-decoration-none">
+                                    <?= e($news['title']) ?>
+                                </a>
+                            </h5>
+                            <p class="text-muted small flex-grow-1 line-clamp-3">
+                                <?= e($news['summary'] ?? strip_tags($news['content'] ?? '')) ?>
+                            </p>
+                            <div class="pt-3 border-top mt-auto">
+                                <a href="<?= url('news/' . $news['slug']) ?>" class="btn btn-sm btn-link p-0 text-primary fw-semibold">
+                                    อ่านรายละเอียด <i class="bi bi-arrow-right ms-1"></i>
+                                </a>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            <?php endforeach; ?>
+        </div>
+    </div>
+</section>
+
+<!-- 7. E-Service Gateway Section -->
+<section class="py-5 bg-light">
+    <div class="container">
+        <div class="text-center mb-5">
+            <span class="text-gold fw-bold text-uppercase small"><i class="bi bi-grid me-1"></i> บริการออนไลน์</span>
+            <h2 class="fw-bold text-navy mb-2">ศูนย์บริการดิจิทัลสำหรับสมาชิก (E-Service)</h2>
+            <p class="text-muted">เชื่อมต่อระบบบริการข้อมูลสมาชิก สวัสดิการ และการเงิน สะดวก รวดเร็ว ตลอด 24 ชั่วโมง</p>
+        </div>
+
+        <div class="row g-4">
+            <?php foreach ($eservices as $es): ?>
+                <div class="col-lg-4 col-md-6">
+                    <a href="<?= e($es['url']) ?>" class="text-decoration-none" data-confirm-external="<?= $es['confirm_before_redirect'] ?>" data-service-name="<?= e($es['name']) ?>">
+                        <div class="coop-card p-4 h-100 d-flex align-items-start">
+                            <div class="quick-service-icon me-3 flex-shrink-0">
+                                <i class="bi <?= e($es['icon']) ?>"></i>
+                            </div>
+                            <div>
+                                <h6 class="fw-bold text-navy mb-1"><?= e($es['name']) ?></h6>
+                                <p class="text-muted small mb-2"><?= e($es['description']) ?></p>
+                                <span class="badge bg-light text-primary border border-primary border-opacity-25 small">
+                                    เข้าใช้งาน <i class="bi bi-box-arrow-up-right ms-1"></i>
+                                </span>
+                            </div>
+                        </div>
+                    </a>
+                </div>
+            <?php endforeach; ?>
+        </div>
+    </div>
+</section>
+
+<!-- Swiper Initialization -->
+<script>
+    document.addEventListener('DOMContentLoaded', function() {
+        if (typeof Swiper !== 'undefined') {
+            new Swiper('.hero-swiper', {
+                loop: true,
+                autoplay: {
+                    delay: 5000,
+                    disableOnInteraction: false,
+                    pauseOnMouseEnter: true
+                },
+                speed: 700,
+                effect: 'fade',
+                fadeEffect: { crossFade: true },
+                pagination: {
+                    el: '.swiper-pagination',
+                    clickable: true
+                },
+                navigation: {
+                    nextEl: '.swiper-button-next',
+                    prevEl: '.swiper-button-prev'
+                }
+            });
+        }
+    });
+</script>

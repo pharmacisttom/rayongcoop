@@ -1,0 +1,128 @@
+#!/usr/bin/env php
+<?php
+
+declare(strict_types=1);
+
+require_once __DIR__ . '/../vendor/autoload.php';
+
+use App\Core\Database;
+use Database\Seeders\DatabaseSeeder;
+
+$command = $argv[1] ?? 'help';
+
+echo "RayongCoop Digital Portal CLI Tool v1.0\n";
+echo "----------------------------------------\n";
+
+switch ($command) {
+    case 'db:create':
+        $config = config('database.connections.mysql');
+        $dsn = sprintf('mysql:host=%s;port=%d', $config['host'], $config['port']);
+        try {
+            $pdo = new PDO($dsn, $config['username'], $config['password'], [PDO::ATTR_ERRMODE => PDO::ERRMODE_EXCEPTION]);
+            $dbName = $config['database'];
+            $pdo->exec("CREATE DATABASE IF NOT EXISTS `{$dbName}` CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci;");
+            echo "✓ Database `{$dbName}` created or already exists.\n";
+        } catch (PDOException $e) {
+            echo "✗ Error creating database: " . $e->getMessage() . "\n";
+            exit(1);
+        }
+        break;
+
+    case 'db:migrate':
+        try {
+            // First ensure DB exists
+            $config = config('database.connections.mysql');
+            $dsn = sprintf('mysql:host=%s;port=%d', $config['host'], $config['port']);
+            $pdoInit = new PDO($dsn, $config['username'], $config['password'], [PDO::ATTR_ERRMODE => PDO::ERRMODE_EXCEPTION]);
+            $pdoInit->exec("CREATE DATABASE IF NOT EXISTS `{$config['database']}` CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci;");
+
+            $pdo = Database::connect();
+            $migrationFiles = glob(__DIR__ . '/../database/migrations/*.sql');
+            sort($migrationFiles);
+
+            foreach ($migrationFiles as $file) {
+                echo "Running migration: " . basename($file) . "...\n";
+                $sql = file_get_contents($file);
+                $pdo->exec($sql);
+                echo "✓ Applied " . basename($file) . "\n";
+            }
+            echo "All migrations applied successfully!\n";
+        } catch (Exception $e) {
+            echo "✗ Migration failed: " . $e->getMessage() . "\n";
+            exit(1);
+        }
+        break;
+
+    case 'db:seed':
+        try {
+            DatabaseSeeder::run();
+        } catch (Exception $e) {
+            echo "✗ Seeding failed: " . $e->getMessage() . "\n";
+            exit(1);
+        }
+        break;
+
+    case 'cron:run':
+        echo "Running scheduled jobs...\n";
+        $pdo = Database::connect();
+        
+        // 1. Expire outdated announcements
+        $stmt = $pdo->prepare("UPDATE announcements SET is_active = 0 WHERE is_active = 1 AND end_at IS NOT NULL AND end_at < NOW()");
+        $stmt->execute();
+        echo "✓ Checked announcements.\n";
+
+        // 2. Expire popups
+        $stmt = $pdo->prepare("UPDATE popups SET status = 'inactive' WHERE status = 'active' AND end_at IS NOT NULL AND end_at < NOW()");
+        $stmt->execute();
+        echo "✓ Checked popups.\n";
+
+        // 3. Clean old login logs (older than 90 days)
+        $stmt = $pdo->prepare("DELETE FROM login_logs WHERE created_at < DATE_SUB(NOW(), INTERVAL 90 DAY)");
+        $stmt->execute();
+        echo "✓ Cleaned old login logs.\n";
+
+        echo "All scheduled cron tasks completed.\n";
+        break;
+
+    case 'backup:run':
+        echo "Creating database backup...\n";
+        $backupDir = __DIR__ . '/../storage/backups';
+        if (!is_dir($backupDir)) {
+            @mkdir($backupDir, 0775, true);
+        }
+        $filename = 'backup_' . date('Y_m_d_His') . '.sql';
+        $target = "{$backupDir}/{$filename}";
+
+        $config = config('database.connections.mysql');
+        // Simple SQL dump
+        $pdo = Database::connect();
+        $tables = $pdo->query("SHOW TABLES")->fetchAll(PDO::FETCH_COLUMN);
+        
+        $dump = "-- RayongCoop Database Backup\n-- Generated: " . date('Y-m-d H:i:s') . "\n\nSET FOREIGN_KEY_CHECKS=0;\n";
+        foreach ($tables as $table) {
+            $createTable = $pdo->query("SHOW CREATE TABLE `{$table}`")->fetch(PDO::FETCH_ASSOC);
+            $dump .= "\nDROP TABLE IF EXISTS `{$table}`;\n" . $createTable['Create Table'] . ";\n\n";
+            $rows = $pdo->query("SELECT * FROM `{$table}`")->fetchAll(PDO::FETCH_ASSOC);
+            foreach ($rows as $row) {
+                $fields = array_map(function($val) use ($pdo) {
+                    return $val === null ? 'NULL' : $pdo->quote((string)$val);
+                }, array_values($row));
+                $dump .= "INSERT INTO `{$table}` VALUES (" . implode(', ', $fields) . ");\n";
+            }
+        }
+        $dump .= "\nSET FOREIGN_KEY_CHECKS=1;\n";
+        file_put_contents($target, $dump);
+        echo "✓ Backup created: {$filename} (" . number_format(filesize($target) / 1024, 2) . " KB)\n";
+        break;
+
+    case 'help':
+    default:
+        echo "Usage: php bin/console <command>\n\n";
+        echo "Available commands:\n";
+        echo "  db:create     Create the MySQL database if it doesn't exist\n";
+        echo "  db:migrate    Run all database SQL migrations\n";
+        echo "  db:seed       Run database seeders with initial financial & system data\n";
+        echo "  cron:run      Run scheduled system tasks (content schedules, cleanups)\n";
+        echo "  backup:run    Create a full database SQL backup archive\n";
+        break;
+}

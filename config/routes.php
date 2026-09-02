@@ -1,0 +1,174 @@
+<?php
+
+declare(strict_types=1);
+
+/** @var \App\Core\Router $router */
+
+use App\Middlewares\AuthMiddleware;
+use App\Middlewares\CsrfMiddleware;
+
+/*
+|--------------------------------------------------------------------------
+| Public Routes
+|--------------------------------------------------------------------------
+*/
+$router->get('/', 'Public\\HomeController@index');
+$router->get('/about', 'Public\\AboutController@index');
+$router->get('/board', 'Public\\AboutController@board');
+$router->get('/statistics', 'Public\\AboutController@statistics');
+
+// Deposits
+$router->get('/deposits', 'Public\\DepositController@index');
+$router->get('/deposits/{slug}', 'Public\\DepositController@show');
+$router->get('/rates', 'Public\\DepositController@index');
+
+// Loans & Calculator
+$router->get('/loans', 'Public\\LoanController@index');
+$router->get('/calculator', 'Public\\CalculatorController@index');
+
+// Welfare & Services
+$router->get('/welfare', 'Public\\WelfareController@index');
+$router->get('/eservice', 'Public\\EServiceController@index');
+
+// Documents
+$router->get('/documents', 'Public\\DocumentController@index');
+$router->get('/documents/{id}/download', 'Public\\DocumentController@download');
+
+// News
+$router->get('/news', 'Public\\NewsController@index');
+$router->get('/news/{slug}', 'Public\\NewsController@show');
+
+// Complaints
+$router->get('/complaints', 'Public\\ComplaintController@index');
+$router->post('/complaints/submit', 'Public\\ComplaintController@submit', [CsrfMiddleware::class]);
+$router->get('/complaints/track', 'Public\\ComplaintController@track');
+
+// Contact & FAQs
+$router->get('/contact', 'Public\\ContactController@index');
+$router->post('/contact/submit', 'Public\\ContactController@submit', [CsrfMiddleware::class]);
+$router->get('/faqs', 'Public\\ContactController@faqs');
+
+// Privacy & Terms
+$router->get('/privacy/policy', 'Public\\PrivacyController@policy');
+$router->get('/privacy/cookies', 'Public\\PrivacyController@cookies');
+$router->get('/terms', 'Public\\PrivacyController@terms');
+
+// APIs
+$router->post('/api/cookie-consent', 'Public\\ApiController@logCookieConsent');
+$router->post('/api/popups/event', 'Public\\ApiController@logPopupEvent');
+
+/*
+|--------------------------------------------------------------------------
+| Authentication Routes
+|--------------------------------------------------------------------------
+*/
+$router->get('/admin/login', 'Admin\\AuthController@showLogin');
+$router->post('/admin/login', 'Admin\\AuthController@login', [CsrfMiddleware::class]);
+$router->get('/admin/2fa', 'Admin\\AuthController@showTwoFactor');
+$router->post('/admin/2fa/verify', 'Admin\\AuthController@verifyTwoFactor', [CsrfMiddleware::class]);
+$router->post('/admin/logout', 'Admin\\AuthController@logout', [CsrfMiddleware::class]);
+
+/*
+|--------------------------------------------------------------------------
+| Protected Admin Routes
+|--------------------------------------------------------------------------
+*/
+$router->group(['prefix' => 'admin', 'middleware' => [AuthMiddleware::class]], function (\App\Core\Router $r) {
+    // Dashboard
+    $r->get('/dashboard', 'Admin\\DashboardController@index');
+    $r->get('/executive', 'Admin\\DashboardController@executive');
+
+    // News CRUD
+    $r->get('/news', 'Admin\\NewsController@index');
+    $r->get('/news/create', 'Admin\\NewsController@create');
+    $r->post('/news/store', 'Admin\\NewsController@store', [CsrfMiddleware::class]);
+    $r->get('/news/{id}/edit', 'Admin\\NewsController@edit');
+    $r->post('/news/{id}/update', 'Admin\\NewsController@update', [CsrfMiddleware::class]);
+    $r->post('/news/{id}/delete', 'Admin\\NewsController@destroy', [CsrfMiddleware::class]);
+
+    // Announcements
+    $r->get('/announcements', 'Admin\\AnnouncementController@index');
+    $r->post('/announcements/store', 'Admin\\AnnouncementController@store', [CsrfMiddleware::class]);
+    $r->post('/announcements/{id}/delete', 'Admin\\AnnouncementController@destroy', [CsrfMiddleware::class]);
+
+    // Hero Slides
+    $r->get('/hero-slides', 'Admin\\HeroSlideController@index');
+    $r->post('/hero-slides/store', 'Admin\\HeroSlideController@store', [CsrfMiddleware::class]);
+    $r->post('/hero-slides/{id}/delete', 'Admin\\HeroSlideController@destroy', [CsrfMiddleware::class]);
+
+    // Popups
+    $r->get('/popups', 'Admin\\PopupController@index');
+    $r->post('/popups/store', 'Admin\\PopupController@store', [CsrfMiddleware::class]);
+    $r->post('/popups/{id}/delete', 'Admin\\PopupController@destroy', [CsrfMiddleware::class]);
+
+    // Rates & History
+    $r->get('/interest-rates', 'Admin\\InterestRateController@index');
+    $r->post('/interest-rates/{id}/update', 'Admin\\InterestRateController@updateRate', [CsrfMiddleware::class]);
+
+    // Deposits
+    $r->get('/deposits', 'Admin\\DepositProductController@index');
+    $r->post('/deposits/store', 'Admin\\DepositProductController@store', [CsrfMiddleware::class]);
+    $r->post('/deposits/{id}/delete', 'Admin\\DepositProductController@destroy', [CsrfMiddleware::class]);
+
+    // Loans
+    $r->get('/loans', 'Admin\\LoanProductController@index');
+    $r->post('/loans/store', 'Admin\\LoanProductController@store', [CsrfMiddleware::class]);
+    $r->post('/loans/{id}/delete', 'Admin\\LoanProductController@destroy', [CsrfMiddleware::class]);
+
+    // Welfare
+    $r->get('/welfare', 'Admin\\WelfareController@index');
+    $r->post('/welfare/store', 'Admin\\WelfareController@store', [CsrfMiddleware::class]);
+    $r->post('/welfare/{id}/delete', 'Admin\\WelfareController@destroy', [CsrfMiddleware::class]);
+
+    // Documents
+    $r->get('/documents', 'Admin\\DocumentController@index');
+    $r->post('/documents/store', 'Admin\\DocumentController@store', [CsrfMiddleware::class]);
+    $r->post('/documents/{id}/delete', 'Admin\\DocumentController@destroy', [CsrfMiddleware::class]);
+
+    // E-Services
+    $r->get('/eservices', 'Admin\\EServiceController@index');
+    $r->post('/eservices/store', 'Admin\\EServiceController@store', [CsrfMiddleware::class]);
+    $r->post('/eservices/{id}/delete', 'Admin\\EServiceController@destroy', [CsrfMiddleware::class]);
+
+    // Complaints
+    $r->get('/complaints', 'Admin\\ComplaintController@index');
+    $r->get('/complaints/{id}', 'Admin\\ComplaintController@show');
+    $r->post('/complaints/{id}/update-status', 'Admin\\ComplaintController@updateStatus', [CsrfMiddleware::class]);
+
+    // Board & Staff
+    $r->get('/board-staff', 'Admin\\BoardStaffController@index');
+    $r->post('/board-staff/store-board', 'Admin\\BoardStaffController@storeBoard', [CsrfMiddleware::class]);
+    $r->post('/board-staff/{id}/delete', 'Admin\\BoardStaffController@destroyBoard', [CsrfMiddleware::class]);
+
+    // FAQs
+    $r->get('/faqs', 'Admin\\FaqController@index');
+    $r->post('/faqs/store', 'Admin\\FaqController@store', [CsrfMiddleware::class]);
+    $r->post('/faqs/{id}/delete', 'Admin\\FaqController@destroy', [CsrfMiddleware::class]);
+
+    // Media Library
+    $r->get('/media', 'Admin\\MediaController@index');
+    $r->post('/media/upload', 'Admin\\MediaController@upload', [CsrfMiddleware::class]);
+    $r->post('/media/{id}/delete', 'Admin\\MediaController@destroy', [CsrfMiddleware::class]);
+
+    // Privacy & Cookies
+    $r->get('/privacy-cookies', 'Admin\\PrivacyCookieController@index');
+
+    // Users & Roles
+    $r->get('/users', 'Admin\\UserController@index');
+    $r->post('/users/store', 'Admin\\UserController@store', [CsrfMiddleware::class]);
+    $r->post('/users/{id}/delete', 'Admin\\UserController@destroy', [CsrfMiddleware::class]);
+
+    // Audit Trail
+    $r->get('/audit-logs', 'Admin\\AuditLogController@index');
+
+    // Backups
+    $r->get('/backups', 'Admin\\BackupController@index');
+    $r->post('/backups/create', 'Admin\\BackupController@createBackup', [CsrfMiddleware::class]);
+    $r->get('/backups/download', function($req, $res) {
+        (new \App\Controllers\Admin\BackupController($req, $res))->download((string)$req->query('file'));
+    });
+
+    // Settings
+    $r->get('/settings', 'Admin\\SettingController@index');
+    $r->post('/settings/update', 'Admin\\SettingController@update', [CsrfMiddleware::class]);
+});
