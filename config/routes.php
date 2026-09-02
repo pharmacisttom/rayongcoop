@@ -162,8 +162,12 @@ $router->group(['prefix' => 'admin', 'middleware' => [AuthMiddleware::class]], f
     $r->get('/audit-logs', 'Admin\\AuditLogController@index');
 
     // Backups
-    $r->get('/backups', 'Admin\\BackupController@index');
-    $r->post('/backups/create', 'Admin\\BackupController@createBackup', [CsrfMiddleware::class]);
+    $r->get('/backups', 'Admin\BackupController@index');
+    $r->post('/backups/create', 'Admin\BackupController@createBackup', [CsrfMiddleware::class]);
+    $r->post('/backups/create-storage', 'Admin\BackupController@createStorageBackup', [CsrfMiddleware::class]);
+    $r->post('/backups/create-full', 'Admin\BackupController@createFullBackup', [CsrfMiddleware::class]);
+    $r->post('/backups/restore', 'Admin\BackupController@restoreBackup', [CsrfMiddleware::class]);
+    $r->post('/backups/delete', 'Admin\BackupController@deleteBackup', [CsrfMiddleware::class]);
     $r->get('/backups/download', function($req, $res) {
         (new \App\Controllers\Admin\BackupController($req, $res))->download((string)$req->query('file'));
     });
