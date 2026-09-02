@@ -146,61 +146,86 @@ a:hover {
 
 /* Announcement Top Bar */
 .announcement-bar {
-    background: linear-gradient(90deg, #073B74 0%, #0B5ED7 100%);
+    background: linear-gradient(90deg, #073B74 0%, #0c4ca3 100%);
     color: #ffffff;
-    font-size: 0.88rem;
-    padding: 7px 0;
+    font-size: 0.85rem;
+    padding: 6px 0;
     border-bottom: 1px solid rgba(255, 255, 255, 0.1);
 }
 
 .announcement-bar .badge {
-    background-color: var(--coop-gold);
-    color: #fff;
-    font-weight: 600;
-    font-size: 0.75rem;
-    letter-spacing: 0.02em;
+    background: linear-gradient(135deg, #d97706, #b45309);
+    color: #ffffff;
+    font-weight: 700;
+    font-size: 0.72rem;
+    letter-spacing: 0.03em;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.15);
 }
 
 /* Header & Navigation */
 .main-header {
     background-color: #ffffff;
-    box-shadow: var(--shadow-subtle);
+    box-shadow: 0 2px 12px rgba(7, 59, 116, 0.06);
     position: sticky;
     top: 0;
     z-index: 1020;
     transition: var(--transition-fast);
 }
 
-.navbar-brand-logo {
-    height: 48px;
-    width: auto;
-    object-fit: contain;
+.brand-icon {
+    background: linear-gradient(135deg, var(--coop-navy) 0%, var(--coop-blue) 100%);
+    transition: var(--transition-normal);
 }
 
-.brand-text-main {
-    font-size: 1.15rem;
-    font-weight: 700;
-    color: var(--coop-navy);
-    line-height: 1.2;
+.navbar-brand:hover .brand-icon {
+    transform: translateY(-2px);
+    box-shadow: 0 4px 10px rgba(11, 94, 215, 0.25);
 }
 
-.brand-text-sub {
-    font-size: 0.75rem;
-    color: var(--coop-muted);
-    font-weight: 400;
+.navbar-nav {
+    gap: 2px;
 }
 
 .nav-link {
+    font-size: 0.94rem;
     font-weight: 500;
-    color: var(--coop-dark);
-    padding: 0.8rem 0.9rem !important;
-    border-radius: 6px;
-    transition: var(--transition-fast);
+    color: #2c3e50;
+    padding: 0.55rem 0.75rem !important;
+    border-radius: 8px;
+    white-space: nowrap !important;
+    position: relative;
+    transition: all 0.2s ease-in-out;
 }
 
-.nav-link:hover, .nav-link.active {
+.nav-link:hover {
     color: var(--coop-blue);
-    background-color: var(--coop-light-blue);
+    background-color: rgba(11, 94, 215, 0.05);
+}
+
+.nav-link.active {
+    color: var(--coop-blue);
+    font-weight: 600;
+    background-color: rgba(11, 94, 215, 0.08);
+}
+
+/* E-Service Header Button */
+.btn-header-eservice {
+    background: linear-gradient(135deg, #073B74 0%, #0B5ED7 100%);
+    color: #ffffff !important;
+    font-weight: 600;
+    font-size: 0.92rem;
+    padding: 0.55rem 1.15rem;
+    border-radius: 50px;
+    white-space: nowrap !important;
+    border: 1px solid rgba(255, 255, 255, 0.2);
+    box-shadow: 0 4px 12px rgba(11, 94, 215, 0.25);
+    transition: all 0.25s ease-in-out;
+}
+
+.btn-header-eservice:hover {
+    background: linear-gradient(135deg, #0B5ED7 0%, #073B74 100%);
+    transform: translateY(-2px);
+    box-shadow: 0 6px 16px rgba(11, 94, 215, 0.35);
 }
 
 /* Mega Menu */

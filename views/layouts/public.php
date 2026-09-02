@@ -22,7 +22,7 @@
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/sweetalert2@11.10.6/dist/sweetalert2.min.css">
     
     <!-- Custom Theme CSS -->
-    <link rel="stylesheet" href="<?= asset('css/style.css') ?>?v=1.0.0">
+    <link rel="stylesheet" href="<?= asset('css/style.css') ?>?v=1.0.1">
 
     <script>
         window.APP_URL = "<?= url('/') ?>";

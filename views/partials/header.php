@@ -1,65 +1,65 @@
-<header class="main-header">
-    <div class="container">
-        <nav class="navbar navbar-expand-lg navbar-light py-2">
+<header class="main-header border-bottom">
+    <div class="container-xl">
+        <nav class="navbar navbar-expand-xl navbar-light py-2">
             <!-- Brand Logo & Name -->
-            <a class="navbar-brand d-flex align-items-center" href="<?= url('/') ?>">
-                <div class="brand-icon me-2 d-flex align-items-center justify-content-center bg-navy text-white rounded-3 p-2 shadow-sm">
+            <a class="navbar-brand d-flex align-items-center py-0 me-3" href="<?= url('/') ?>">
+                <div class="brand-icon me-2 d-flex align-items-center justify-content-center bg-navy text-white rounded-3 shadow-sm" style="width: 44px; height: 44px;">
                     <i class="bi bi-bank2 fs-4"></i>
                 </div>
                 <div>
-                    <div class="brand-text-main"><?= config('app.coop.short_name') ?></div>
-                    <div class="brand-text-sub d-none d-md-block"><?= config('app.coop.full_name_th') ?></div>
+                    <div class="brand-text-main fw-bold text-navy" style="font-size: 1.15rem; line-height: 1.2; letter-spacing: -0.01em;"><?= config('app.coop.short_name') ?></div>
+                    <div class="brand-text-sub text-muted small d-none d-sm-block" style="font-size: 0.72rem;"><?= config('app.coop.full_name_th') ?></div>
                 </div>
             </a>
 
             <!-- Mobile Controls -->
-            <div class="d-flex align-items-center d-lg-none ms-auto">
-                <a href="<?= url('eservice') ?>" class="btn btn-navy btn-sm me-2">
+            <div class="d-flex align-items-center d-xl-none ms-auto gap-2">
+                <a href="<?= url('eservice') ?>" class="btn btn-navy btn-sm px-3 shadow-sm">
                     <i class="bi bi-person-circle me-1"></i> E-Service
                 </a>
-                <button class="navbar-toggler border-0 shadow-none p-1" type="button" data-bs-toggle="offcanvas" data-bs-target="#mobileMenuOffcanvas" aria-controls="mobileMenuOffcanvas">
+                <button class="navbar-toggler border-0 shadow-none p-1" type="button" data-bs-toggle="offcanvas" data-bs-target="#mobileMenuOffcanvas" aria-controls="mobileMenuOffcanvas" aria-label="Toggle navigation">
                     <span class="navbar-toggler-icon"></span>
                 </button>
             </div>
 
             <!-- Desktop Menu -->
             <div class="collapse navbar-collapse" id="desktopNavbar">
-                <ul class="navbar-nav mx-auto mb-2 mb-lg-0">
+                <ul class="navbar-nav mx-auto align-items-center mb-2 mb-xl-0">
                     <li class="nav-item">
                         <a class="nav-link <?= $request->uri() === '/' ? 'active' : '' ?>" href="<?= url('/') ?>">
-                            <i class="bi bi-house-door me-1"></i> หน้าแรก
+                            หน้าแรก
                         </a>
                     </li>
                     <li class="nav-item dropdown has-megamenu">
-                        <a class="nav-link dropdown-toggle" href="#" data-bs-toggle="dropdown">
-                            <i class="bi bi-info-circle me-1"></i> เกี่ยวกับสหกรณ์
+                        <a class="nav-link dropdown-toggle <?= in_array($request->uri(), ['/about', '/board', '/statistics', '/complaints']) ? 'active' : '' ?>" href="#" data-bs-toggle="dropdown">
+                            เกี่ยวกับสหกรณ์
                         </a>
-                        <div class="dropdown-menu megamenu-dropdown">
-                            <div class="row g-3">
+                        <div class="dropdown-menu megamenu-dropdown shadow-lg border-0">
+                            <div class="row g-4">
                                 <div class="col-md-4">
-                                    <h6 class="fw-bold text-navy mb-2"><i class="bi bi-building me-1"></i> องค์กร</h6>
+                                    <h6 class="fw-bold text-navy mb-3 pb-2 border-bottom"><i class="bi bi-building me-1 text-primary"></i> ข้อมูลองค์กร</h6>
                                     <a class="megamenu-item-link" href="<?= url('about') ?>">
                                         <div class="megamenu-icon"><i class="bi bi-shield-check"></i></div>
                                         <div>
                                             <div class="fw-semibold">ประวัติและวิสัยทัศน์</div>
-                                            <small class="text-muted">ความเป็นมา ค่านิยม และเป้าหมาย</small>
+                                            <small class="text-muted">ความเป็นมา ค่านิยม พันธกิจ</small>
                                         </div>
                                     </a>
                                     <a class="megamenu-item-link" href="<?= url('board') ?>">
                                         <div class="megamenu-icon"><i class="bi bi-people"></i></div>
                                         <div>
                                             <div class="fw-semibold">คณะกรรมการดำเนินการ</div>
-                                            <small class="text-muted">โครงสร้างการบริหารและผู้ตรวจสอบ</small>
+                                            <small class="text-muted">โครงสร้างการบริหารและฝ่ายจัดการ</small>
                                         </div>
                                     </a>
                                 </div>
                                 <div class="col-md-4">
-                                    <h6 class="fw-bold text-navy mb-2"><i class="bi bi-graph-up-arrow me-1"></i> ผลการดำเนินงาน</h6>
+                                    <h6 class="fw-bold text-navy mb-3 pb-2 border-bottom"><i class="bi bi-graph-up-arrow me-1 text-primary"></i> ผลการดำเนินงาน</h6>
                                     <a class="megamenu-item-link" href="<?= url('statistics') ?>">
                                         <div class="megamenu-icon"><i class="bi bi-pie-chart"></i></div>
                                         <div>
                                             <div class="fw-semibold">ฐานะการเงินและสถิติ</div>
-                                            <small class="text-muted">ทุนเรือนหุ้น เงินฝาก สินเชื่อ และสินทรัพย์</small>
+                                            <small class="text-muted">ทุนเรือนหุ้น เงินฝาก สินเชื่อ</small>
                                         </div>
                                     </a>
                                     <a class="megamenu-item-link" href="<?= url('documents?cat=annual-reports') ?>">
@@ -71,10 +71,10 @@
                                     </a>
                                 </div>
                                 <div class="col-md-4">
-                                    <div class="p-3 bg-light-blue rounded-3">
-                                        <h6 class="fw-bold text-navy"><i class="bi bi-shield-lock me-1"></i> ความโปร่งใส</h6>
-                                        <p class="small text-muted mb-2">มุ่งมั่นบริหารงานด้วยหลักธรรมาภิบาล มั่นคง โปร่งใส ตรวจสอบได้</p>
-                                        <a href="<?= url('complaints') ?>" class="btn btn-sm btn-outline-primary w-100">ศูนย์รับเรื่องร้องเรียน</a>
+                                    <div class="p-3 bg-light-blue rounded-3 border">
+                                        <h6 class="fw-bold text-navy mb-2"><i class="bi bi-shield-lock me-1 text-primary"></i> ความโปร่งใส & บริการ</h6>
+                                        <p class="small text-muted mb-3">ยึดมั่นการดำเนินงานตามหลักธรรมาภิบาล มั่นคง โปร่งใส ตรวจสอบได้</p>
+                                        <a href="<?= url('complaints') ?>" class="btn btn-sm btn-primary w-100 fw-medium">ศูนย์รับเรื่องร้องเรียน</a>
                                     </div>
                                 </div>
                             </div>
@@ -82,45 +82,46 @@
                     </li>
                     <li class="nav-item">
                         <a class="nav-link <?= str_starts_with($request->uri(), '/deposits') ? 'active' : '' ?>" href="<?= url('deposits') ?>">
-                            <i class="bi bi-piggy-bank me-1"></i> เงินฝาก
+                            เงินฝาก
                         </a>
                     </li>
                     <li class="nav-item">
                         <a class="nav-link <?= str_starts_with($request->uri(), '/loans') ? 'active' : '' ?>" href="<?= url('loans') ?>">
-                            <i class="bi bi-cash-stack me-1"></i> เงินกู้
+                            สินเชื่อ
                         </a>
                     </li>
                     <li class="nav-item">
                         <a class="nav-link <?= str_starts_with($request->uri(), '/calculator') ? 'active' : '' ?>" href="<?= url('calculator') ?>">
-                            <i class="bi bi-calculator me-1"></i> คำนวณเงินกู้
+                            คำนวณเงินกู้
                         </a>
                     </li>
                     <li class="nav-item">
                         <a class="nav-link <?= str_starts_with($request->uri(), '/welfare') ? 'active' : '' ?>" href="<?= url('welfare') ?>">
-                            <i class="bi bi-heart-pulse me-1"></i> สวัสดิการ
+                            สวัสดิการ
                         </a>
                     </li>
                     <li class="nav-item">
                         <a class="nav-link <?= str_starts_with($request->uri(), '/news') ? 'active' : '' ?>" href="<?= url('news') ?>">
-                            <i class="bi bi-newspaper me-1"></i> ข่าวสาร
+                            ข่าวสาร
                         </a>
                     </li>
                     <li class="nav-item">
                         <a class="nav-link <?= str_starts_with($request->uri(), '/documents') ? 'active' : '' ?>" href="<?= url('documents') ?>">
-                            <i class="bi bi-file-earmark-arrow-down me-1"></i> เอกสาร
+                            ดาวน์โหลด
                         </a>
                     </li>
                     <li class="nav-item">
                         <a class="nav-link <?= str_starts_with($request->uri(), '/contact') ? 'active' : '' ?>" href="<?= url('contact') ?>">
-                            <i class="bi bi-geo-alt me-1"></i> ติดต่อเรา
+                            ติดต่อเรา
                         </a>
                     </li>
                 </ul>
 
                 <!-- E-Service CTA Button -->
-                <div class="d-flex align-items-center">
-                    <a href="<?= url('eservice') ?>" class="btn btn-navy shadow-sm">
-                        <i class="bi bi-person-circle me-1"></i> เข้าสู่ระบบ E-Service
+                <div class="d-flex align-items-center ms-lg-2">
+                    <a href="<?= url('eservice') ?>" class="btn btn-header-eservice d-inline-flex align-items-center shadow-sm">
+                        <i class="bi bi-person-fill-lock fs-5 me-2"></i>
+                        <span>เข้าสู่ระบบ E-Service</span>
                     </a>
                 </div>
             </div>
