@@ -83,9 +83,21 @@ if (!function_exists('config')) {
 if (!function_exists('url')) {
     function url(string $path = ''): string
     {
-        $base = rtrim(config('app.url', 'http://localhost/rayongcoop/public'), '/');
+        static $baseUrl = null;
+        if ($baseUrl === null) {
+            $configured = config('app.url');
+            if (!empty($configured) && !str_contains($configured, 'localhost')) {
+                $baseUrl = rtrim($configured, '/');
+            } else {
+                $protocol = (!empty($_SERVER['HTTPS']) && $_SERVER['HTTPS'] !== 'off') ? 'https://' : 'http://';
+                $host = $_SERVER['HTTP_HOST'] ?? 'localhost';
+                $scriptDir = str_replace('\\', '/', dirname($_SERVER['SCRIPT_NAME'] ?? ''));
+                $scriptDir = rtrim($scriptDir, '/');
+                $baseUrl = rtrim("{$protocol}{$host}{$scriptDir}", '/');
+            }
+        }
         $path = ltrim($path, '/');
-        return $path === '' ? $base : "{$base}/{$path}";
+        return $path === '' ? $baseUrl : "{$baseUrl}/{$path}";
     }
 }
 

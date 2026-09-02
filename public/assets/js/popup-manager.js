@@ -111,7 +111,15 @@ const PopupManager = (function() {
 
         let bodyHtml = '';
         if (popup.desktop_image) {
-            bodyHtml += `<div class="text-center mb-3"><img src="${popup.desktop_image}" class="img-fluid rounded-3 shadow-sm" alt="${popup.title}"></div>`;
+            let imgSrc = popup.desktop_image;
+            if (!imgSrc.startsWith('http://') && !imgSrc.startsWith('https://') && !imgSrc.startsWith('data:')) {
+                if (imgSrc.startsWith('/')) {
+                    imgSrc = (window.APP_URL || '') + imgSrc;
+                } else {
+                    imgSrc = (window.APP_URL || '') + '/assets/img/' + imgSrc;
+                }
+            }
+            bodyHtml += `<div class="text-center mb-3"><img src="${imgSrc}" class="img-fluid rounded-3 shadow-sm" alt="${popup.title}" onerror="this.style.display='none'"></div>`;
         }
         if (popup.content) {
             bodyHtml += `<div class="popup-content-text mb-3">${popup.content}</div>`;

@@ -28,12 +28,20 @@ class Request
     private function parseUri(): string
     {
         $requestUri = $_SERVER['REQUEST_URI'] ?? '/';
-        $scriptName = $_SERVER['SCRIPT_NAME'] ?? '';
-        $baseDir = dirname($scriptName);
+        $scriptName = str_replace('\\', '/', $_SERVER['SCRIPT_NAME'] ?? '');
+        $baseDir = rtrim(str_replace('\\', '/', dirname($scriptName)), '/');
 
-        // Strip baseDir from requestUri if running inside subdirectory
-        if ($baseDir !== '/' && $baseDir !== '\\' && str_starts_with($requestUri, $baseDir)) {
+        if ($baseDir !== '' && $baseDir !== '/' && str_starts_with($requestUri, $baseDir)) {
             $requestUri = substr($requestUri, strlen($baseDir));
+        }
+
+        $parentDir = rtrim(str_replace('\\', '/', dirname($baseDir)), '/');
+        if ($parentDir !== '' && $parentDir !== '/' && str_starts_with($requestUri, $parentDir)) {
+            $requestUri = substr($requestUri, strlen($parentDir));
+        }
+
+        if (str_starts_with($requestUri, '/public')) {
+            $requestUri = substr($requestUri, 7);
         }
 
         $path = parse_url($requestUri, PHP_URL_PATH) ?? '/';
