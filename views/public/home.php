@@ -354,7 +354,10 @@
                 <div class="col-lg-4 col-md-6">
                     <div class="coop-card h-100 d-flex flex-column">
                         <div class="position-relative bg-light" style="height: 200px; overflow: hidden;">
-                            <img src="<?= asset('img/news_placeholder.jpg') ?>" class="w-100 h-100 object-fit-cover" alt="<?= e($news['title']) ?>">
+                            <?php 
+                                $newsThumb = !empty($news['thumbnail']) ? storage_url($news['thumbnail']) : (!empty($news['featured_image']) ? storage_url($news['featured_image']) : asset('img/news_placeholder.jpg')); 
+                            ?>
+                            <img src="<?= $newsThumb ?>" onerror="this.onerror=null; this.src='<?= asset('img/news_placeholder.jpg') ?>';" class="w-100 h-100 object-fit-cover" alt="<?= e($news['title']) ?>">
                             <span class="position-absolute top-0 start-0 m-3 badge bg-navy">
                                 <?= e($news['category_name']) ?>
                             </span>
