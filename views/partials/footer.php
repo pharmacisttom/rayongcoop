@@ -1,5 +1,5 @@
 <footer class="main-footer">
-    <div class="container pb-5">
+    <div class="container-xl pb-5">
         <div class="row g-4">
             <!-- Col 1: Coop Info -->
             <div class="col-lg-4 col-md-6">
@@ -70,7 +70,7 @@
 
     <!-- Footer Bottom -->
     <div class="footer-bottom">
-        <div class="container d-flex flex-column flex-md-row justify-content-between align-items-center gap-2">
+        <div class="container-xl d-flex flex-column flex-md-row justify-content-between align-items-center gap-2">
             <div>
                 © <?= date('Y') + 543 ?> <?= config('app.coop.full_name_th') ?>. All Rights Reserved.
             </div>

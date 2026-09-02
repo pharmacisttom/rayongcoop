@@ -6,10 +6,10 @@
                 <?php foreach ($heroSlides as $slide): ?>
                     <div class="swiper-slide hero-slide" style="background-image: url('<?= asset('img/hero_bg_default.jpg') ?>');">
                         <div class="hero-overlay" style="opacity: <?= e($slide['overlay_opacity']) ?>;"></div>
-                        <div class="container position-relative z-2 py-5">
-                            <div class="row align-items-center">
-                                <div class="col-lg-8 col-md-10 text-<?= e($slide['text_alignment'] ?? 'left') ?>">
-                                    <span class="badge bg-gold text-white mb-2 px-3 py-1 rounded-pill fw-semibold">
+                        <div class="container-xl position-relative z-2 py-5">
+                            <div class="row align-items-center g-4">
+                                <div class="col-lg-7 col-md-12 text-<?= e($slide['text_alignment'] ?? 'left') ?>">
+                                    <span class="badge bg-gold text-white mb-2 px-3 py-1 rounded-pill fw-semibold shadow-sm">
                                         <i class="bi bi-shield-check me-1"></i> <?= e($slide['subtitle'] ?? 'สอ.สธ.ระยอง') ?>
                                     </span>
                                     <h1 class="hero-title"><?= e($slide['title']) ?></h1>
@@ -25,13 +25,43 @@
                                         </a>
                                     </div>
                                 </div>
+                                <div class="col-lg-5 d-none d-lg-block">
+                                    <div class="hero-highlight-glass p-4 rounded-4 shadow-lg text-white">
+                                        <div class="d-flex align-items-center justify-content-between mb-3 pb-2 border-bottom border-white-20">
+                                            <div class="fw-bold fs-6"><i class="bi bi-stars text-warning me-1"></i> จุดเด่นทางการเงิน</div>
+                                            <span class="badge bg-white text-navy px-2 py-1 rounded-pill small fw-bold">อัปเดตล่าสุด</span>
+                                        </div>
+                                        <div class="row g-3">
+                                            <div class="col-6">
+                                                <div class="hero-stat-card p-3 rounded-3 text-center">
+                                                    <div class="small text-white-80">เงินฝากออมทรัพย์พิเศษ</div>
+                                                    <div class="fs-2 fw-bold text-gold my-1">3.10%</div>
+                                                    <div class="small text-white-70">ต่อปี ปลอดภาษี</div>
+                                                </div>
+                                            </div>
+                                            <div class="col-6">
+                                                <div class="hero-stat-card p-3 rounded-3 text-center">
+                                                    <div class="small text-white-80">สินเชื่อสามัญ</div>
+                                                    <div class="fs-2 fw-bold text-white my-1">4.50%</div>
+                                                    <div class="small text-white-70">ต่อปี ลดต้นลดดอก</div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class="mt-3 pt-3 border-top border-white-20 d-flex justify-content-between align-items-center">
+                                            <small class="text-white-90"><i class="bi bi-shield-check text-warning me-1"></i> มั่นคง โปร่งใส เพื่อสมาชิก</small>
+                                            <a href="<?= url('eservice') ?>" class="btn btn-sm btn-gold text-navy fw-bold px-3 shadow-sm">
+                                                เข้าสู่ระบบ E-Service <i class="bi bi-chevron-right ms-1"></i>
+                                            </a>
+                                        </div>
+                                    </div>
+                                </div>
                             </div>
                         </div>
                     </div>
                 <?php endforeach; ?>
             <?php else: ?>
                 <div class="swiper-slide hero-slide bg-navy">
-                    <div class="container position-relative z-2 py-5 text-white">
+                    <div class="container-xl position-relative z-2 py-5 text-white">
                         <h1 class="hero-title">มั่นคง โปร่งใส ทันสมัย เพื่อคุณภาพชีวิตที่ดีของสมาชิก</h1>
                         <p class="hero-subtitle">สหกรณ์ออมทรัพย์สาธารณสุขระยอง จำกัด</p>
                     </div>
@@ -45,7 +75,7 @@
 </section>
 
 <!-- 2. Quick Services Bar (1-2 Clicks Access) -->
-<section class="container">
+<section class="container-xl">
     <div class="quick-services-card">
         <div class="row row-cols-2 row-cols-sm-3 row-cols-md-6 g-3 justify-content-center">
             <div class="col">
@@ -92,7 +122,7 @@
 
 <!-- 3. Financial Rates Dashboard Section -->
 <section class="py-5">
-    <div class="container">
+    <div class="container-xl">
         <div class="row align-items-center mb-4">
             <div class="col-md-8">
                 <span class="text-gold fw-bold text-uppercase small"><i class="bi bi-graph-up me-1"></i> อัตราดอกเบี้ยปัจจุบัน</span>
@@ -202,7 +232,7 @@
 
 <!-- 4. Interactive Loan Calculator Preview Widget -->
 <section class="py-5 bg-light">
-    <div class="container">
+    <div class="container-xl">
         <div class="calc-card p-4 p-md-5">
             <div class="row g-4 align-items-center">
                 <div class="col-lg-6">
@@ -265,7 +295,7 @@
 <!-- 5. Executive Financial Highlights Section -->
 <?php if ($latestStats): ?>
 <section class="stats-section">
-    <div class="container position-relative z-2">
+    <div class="container-xl position-relative z-2">
         <div class="text-center mb-5">
             <span class="badge bg-gold text-white px-3 py-1 rounded-pill mb-2">สถิติทางการเงิน</span>
             <h2 class="text-white fw-bold">ฐานะทางการเงินที่มั่นคงและเติบโตอย่างยั่งยืน</h2>
@@ -308,7 +338,7 @@
 
 <!-- 6. Latest News & Announcements Section -->
 <section class="py-5">
-    <div class="container">
+    <div class="container-xl">
         <div class="d-flex justify-content-between align-items-center mb-4">
             <div>
                 <span class="text-gold fw-bold text-uppercase small"><i class="bi bi-newspaper me-1"></i> ข่าวสารและกิจกรรม</span>
@@ -356,7 +386,7 @@
 
 <!-- 7. E-Service Gateway Section -->
 <section class="py-5 bg-light">
-    <div class="container">
+    <div class="container-xl">
         <div class="text-center mb-5">
             <span class="text-gold fw-bold text-uppercase small"><i class="bi bi-grid me-1"></i> บริการออนไลน์</span>
             <h2 class="fw-bold text-navy mb-2">ศูนย์บริการดิจิทัลสำหรับสมาชิก (E-Service)</h2>

@@ -4,7 +4,7 @@ $activeAnnouncement = Database::first("SELECT * FROM announcements WHERE is_acti
 ?>
 <?php if ($activeAnnouncement): ?>
 <div class="announcement-bar">
-    <div class="container d-flex align-items-center justify-content-between flex-wrap">
+    <div class="container-xl d-flex align-items-center justify-content-between flex-wrap">
         <div class="d-flex align-items-center me-3 py-1">
             <span class="badge rounded-pill me-2 px-2 py-1">
                 <i class="bi bi-megaphone-fill me-1"></i> <?= e(strtoupper($activeAnnouncement['priority'])) ?>

@@ -189,9 +189,9 @@ a:hover {
 .nav-link {
     font-size: 0.94rem;
     font-weight: 500;
-    color: #2c3e50;
+    color: #334155;
     padding: 0.55rem 0.75rem !important;
-    border-radius: 8px;
+    border-radius: 6px;
     white-space: nowrap !important;
     position: relative;
     transition: all 0.2s ease-in-out;
@@ -199,13 +199,33 @@ a:hover {
 
 .nav-link:hover {
     color: var(--coop-blue);
-    background-color: rgba(11, 94, 215, 0.05);
+    background-color: transparent;
 }
 
 .nav-link.active {
-    color: var(--coop-blue);
-    font-weight: 600;
-    background-color: rgba(11, 94, 215, 0.08);
+    color: var(--coop-navy);
+    font-weight: 700;
+    background-color: transparent;
+}
+
+.nav-link::after {
+    content: '';
+    position: absolute;
+    bottom: 2px;
+    left: 12px;
+    right: 12px;
+    height: 2.5px;
+    background: var(--coop-blue);
+    border-radius: 2px;
+    opacity: 0;
+    transform: scaleX(0.5);
+    transition: all 0.2s ease;
+}
+
+.nav-link:hover::after,
+.nav-link.active::after {
+    opacity: 1;
+    transform: scaleX(1);
 }
 
 /* E-Service Header Button */
@@ -333,6 +353,34 @@ a:hover {
     margin-bottom: 20px;
     line-height: 1.5;
 }
+
+/* Glassmorphism Highlight Card */
+.hero-highlight-glass {
+    background: rgba(255, 255, 255, 0.12);
+    backdrop-filter: blur(12px);
+    -webkit-backdrop-filter: blur(12px);
+    border: 1px solid rgba(255, 255, 255, 0.25);
+    box-shadow: 0 15px 35px rgba(0, 0, 0, 0.2);
+    transition: transform 0.3s ease;
+}
+
+.hero-highlight-glass:hover {
+    transform: translateY(-4px);
+}
+
+.hero-stat-card {
+    background: rgba(255, 255, 255, 0.15);
+    border: 1px solid rgba(255, 255, 255, 0.2);
+    backdrop-filter: blur(8px);
+}
+
+.border-white-20 {
+    border-color: rgba(255, 255, 255, 0.2) !important;
+}
+
+.text-white-70 { color: rgba(255, 255, 255, 0.75) !important; }
+.text-white-80 { color: rgba(255, 255, 255, 0.85) !important; }
+.text-white-90 { color: rgba(255, 255, 255, 0.95) !important; }
 
 @media (max-width: 768px) {
     .hero-title { font-size: 1.5rem; }
