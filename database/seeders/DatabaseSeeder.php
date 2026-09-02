@@ -48,11 +48,7 @@ class DatabaseSeeder
         }
 
         // 4. SEED SUPER ADMIN USER
-        $adminPassword = password_hash('Admin@RayongCoop2026!', PASSWORD_ARGON2ID, [
-            'memory_cost' => 65536,
-            'time_cost' => 4,
-            'threads' => 2,
-        ]);
+        $adminPassword = password_hash('Adminrycoop2026', PASSWORD_BCRYPT);
         $adminUuid = '00000000-0000-0000-0000-000000000001';
 
         $stmt = $pdo->prepare("INSERT INTO users (uuid, name, username, email, password, status, two_factor_enabled, created_at) 
@@ -64,7 +60,7 @@ class DatabaseSeeder
         // Assign super_admin role
         $stmt = $pdo->prepare("INSERT IGNORE INTO user_roles (user_id, role_id, created_at) VALUES (?, ?, NOW())");
         $stmt->execute([$adminId, $superAdminRoleId]);
-        echo "✓ Seeded Super Admin User (admin@rayongcoop.com / Admin@RayongCoop2026!)\n";
+        echo "✓ Seeded Super Admin User (admin / Adminrycoop2026)\n";
 
         // 5. SEED COOKIE CATEGORIES
         $cookieCategories = [
