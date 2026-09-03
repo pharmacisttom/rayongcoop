@@ -3,7 +3,8 @@
         <nav class="navbar navbar-expand-xl navbar-light py-2">
             <!-- Brand Logo & Name -->
             <a class="navbar-brand d-flex align-items-center py-0 me-3" href="<?= url('/') ?>">
-                <div class="brand-icon me-2 d-flex align-items-center justify-content-center bg-navy text-white rounded-3 shadow-sm" style="width: 44px; height: 44px;">
+                <img src="<?= asset('img/logo.png') ?>" alt="<?= config('app.coop.short_name') ?>" class="me-2 shadow-sm rounded-circle" style="width: 44px; height: 44px; object-fit: contain;" onerror="this.style.display='none'; this.nextElementSibling.style.display='flex';">
+                <div class="brand-icon me-2 align-items-center justify-content-center bg-navy text-white rounded-3 shadow-sm" style="width: 44px; height: 44px; display: none;">
                     <i class="bi bi-bank2 fs-4"></i>
                 </div>
                 <div>

@@ -580,6 +580,53 @@ a:hover {
     transition: var(--transition-fast);
 }
 
+/* Activity Gallery Section */
+.activity-card {
+    transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+    border: 1px solid rgba(7, 59, 116, 0.08);
+}
+
+.activity-card:hover {
+    transform: translateY(-6px);
+    box-shadow: 0 16px 32px rgba(7, 59, 116, 0.12);
+}
+
+.activity-img-wrapper {
+    position: relative;
+    overflow: hidden;
+}
+
+.activity-img {
+    transition: transform 0.4s ease;
+}
+
+.activity-img-wrapper:hover .activity-img {
+    transform: scale(1.08);
+}
+
+.activity-hover-overlay {
+    position: absolute;
+    inset: 0;
+    background: rgba(7, 59, 116, 0.45);
+    opacity: 0;
+    transition: opacity 0.3s ease;
+}
+
+.activity-img-wrapper:hover .activity-hover-overlay {
+    opacity: 1;
+}
+
+.filter-btn-group .btn {
+    border-radius: 50px !important;
+    padding: 0.4rem 0.9rem;
+    font-size: 0.85rem;
+    font-weight: 500;
+}
+
+.filter-btn-group {
+    gap: 4px;
+}
+
 .doc-row:hover {
     border-color: var(--coop-blue);
     background-color: var(--coop-light-subtle);

@@ -31,6 +31,70 @@ class HomeController extends Controller
         // 6. E-Service Quick Links
         $eservices = Database::query("SELECT * FROM eservice_links WHERE status = 'active' ORDER BY sort_order ASC LIMIT 6");
 
+        // 7. Cooperative & Member Activities
+        $activities = [
+            [
+                'id' => 1,
+                'title' => 'การประชุมใหญ่สามัญประจำปี 2568 และมอบทุนการศึกษาบุตรสมาชิก',
+                'category' => 'meeting',
+                'category_name' => 'ประชุมใหญ่ & สัมมนา',
+                'date' => '2026-08-25',
+                'location' => 'ห้องประชุมใหญ่ รพ.ระยอง',
+                'image' => 'activities/activity_1.jpg',
+                'description' => 'สหกรณ์ออมทรัพย์สาธารณสุขระยอง จำกัด จัดการประชุมใหญ่สามัญประจำปี พร้อมพิธีมอบทุนการศึกษาแก่บุตรสมาชิกสหกรณ์ เพื่อส่งเสริมการศึกษาและอนาคตเยาวชน',
+            ],
+            [
+                'id' => 2,
+                'title' => 'โครงการอบรมวางแผนทางการเงินและการลงทุนเพื่อสมาชิกวัยเกษียณ',
+                'category' => 'training',
+                'category_name' => 'ประชุมใหญ่ & สัมมนา',
+                'date' => '2026-07-18',
+                'location' => 'โรงแรมสตาร์ คอนเวนชั่น ระยอง',
+                'image' => 'activities/activity_2.jpg',
+                'description' => 'ส่งเสริมความรู้การบริหารจัดการเงินออม การลงทุน และการวางแผนภาษี เพื่อคุณภาพชีวิตที่มั่นคงและมีความสุขหลังเกษียณอายุราชการ',
+            ],
+            [
+                'id' => 3,
+                'title' => 'สหกรณ์สัญจรพบสมาชิก มอบสวัสดิการและให้คำปรึกษาทางการเงิน ณ รพ.แกลง',
+                'category' => 'welfare',
+                'category_name' => 'สวัสดิการ & สมาชิก',
+                'date' => '2026-06-30',
+                'location' => 'โรงพยาบาลแกลง จ.ระยอง',
+                'image' => 'activities/activity_3.jpg',
+                'description' => 'ทีมงานฝ่ายจัดการออกหน่วยสัญจรรับคำขอกู้เงิน เปิดบัญชีเงินฝาก และให้บริการสมาชิกถึงหน่วยงาน เพื่อความสะดวกรวดเร็ว',
+            ],
+            [
+                'id' => 4,
+                'title' => 'สหกรณ์ร่วมบริจาคเงินและสนับสนุนอุปกรณ์การแพทย์เพื่อสังคม (CSR)',
+                'category' => 'csr',
+                'category_name' => 'กิจกรรมเพื่อสังคม (CSR)',
+                'date' => '2026-05-15',
+                'location' => 'รพ.สต. ในเขตจังหวัดระยอง',
+                'image' => 'activities/activity_4.jpg',
+                'description' => 'สนับสนุนกองทุนพัฒนาสถานพยาบาลและอุปกรณ์การแพทย์ เพื่อยกระดับการให้บริการสาธารณสุขแก่ประชาชนในพื้นที่จังหวัดระยอง',
+            ],
+            [
+                'id' => 5,
+                'title' => 'กิจกรรมตรวจสุขภาพประจำปีฟรี สำหรับสมาชิกสหกรณ์',
+                'category' => 'welfare',
+                'category_name' => 'สวัสดิการ & สมาชิก',
+                'date' => '2026-04-10',
+                'location' => 'สำนักงานสหกรณ์ออมทรัพย์สาธารณสุขระยอง',
+                'image' => 'activities/activity_5.jpg',
+                'description' => 'ให้บริการตรวจเช็คสุขภาพ ตรวจเลือด และเอกซเรย์ปอดฟรี ประจำปี เพื่อส่งเสริมสุขภาพและดูแลคุณภาพชีวิตสมาชิกอย่างใกล้ชิด',
+            ],
+            [
+                'id' => 6,
+                'title' => 'พิธีมอบของที่ระลึกและรางวัลสมาชิกผู้มีวินัยทางการเงินดีเด่น',
+                'category' => 'welfare',
+                'category_name' => 'สวัสดิการ & สมาชิก',
+                'date' => '2026-03-20',
+                'location' => 'สำนักงานใหญ่ สอ.สธ.ระยอง',
+                'image' => 'activities/activity_6.jpg',
+                'description' => 'เชิดชูเกียรติสมาชิกที่มียอดเงินออมสม่ำเสมอและมีวินัยในการชำระหนี้ตรงเวลาอย่างต่อเนื่อง เพื่อสร้างวัฒนธรรมทางการเงินที่เข้มแข็ง',
+            ],
+        ];
+
         $this->render('public.home', [
             'title' => 'หน้าแรก',
             'heroSlides' => $heroSlides,
@@ -41,6 +105,7 @@ class HomeController extends Controller
             'featuredLoans' => $featuredLoans,
             'latestStats' => $latestStats,
             'eservices' => $eservices,
+            'activities' => $activities,
         ]);
     }
 }

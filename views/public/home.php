@@ -387,8 +387,130 @@
     </div>
 </section>
 
-<!-- 7. E-Service Gateway Section -->
-<section class="py-5 bg-light">
+<!-- 7. Cooperative & Member Activities Gallery Section -->
+<?php if (!empty($activities)): ?>
+<section class="py-5 bg-light border-top border-bottom">
+    <div class="container-xl">
+        <div class="row align-items-end mb-4 g-3">
+            <div class="col-lg-8">
+                <span class="badge bg-gold text-white px-3 py-1 rounded-pill mb-2 shadow-sm">
+                    <i class="bi bi-camera-fill me-1"></i> ภาพกิจกรรมและสมาชิก
+                </span>
+                <h2 class="fw-bold text-navy mb-1">ภาพกิจกรรมสหกรณ์และรอยยิ้มสมาชิก</h2>
+                <p class="text-muted small mb-0">ประมวลภาพกิจกรรมการประชุมใหญ่ สัมมนาพัฒนาความรู้ การมอบสวัสดิการ และกิจกรรมเพื่อสังคม</p>
+            </div>
+            <div class="col-lg-4 text-lg-end">
+                <div class="btn-group btn-group-sm filter-btn-group" role="group" aria-label="Activity Filter">
+                    <button type="button" class="btn btn-outline-primary active" onclick="filterActivities('all', this)">ทั้งหมด</button>
+                    <button type="button" class="btn btn-outline-primary" onclick="filterActivities('meeting', this)">ประชุม & สัมมนา</button>
+                    <button type="button" class="btn btn-outline-primary" onclick="filterActivities('welfare', this)">สวัสดิการ</button>
+                    <button type="button" class="btn btn-outline-primary" onclick="filterActivities('csr', this)">CSR เพื่อสังคม</button>
+                </div>
+            </div>
+        </div>
+
+        <div class="row g-4" id="activityGalleryGrid">
+            <?php foreach ($activities as $act): ?>
+                <div class="col-lg-4 col-md-6 activity-item" data-category="<?= e($act['category']) ?>">
+                    <div class="coop-card h-100 d-flex flex-column overflow-hidden activity-card shadow-sm">
+                        <div class="position-relative activity-img-wrapper" style="height: 220px; cursor: pointer;" onclick="openActivityModal(<?= htmlspecialchars(json_encode($act, JSON_UNESCAPED_UNICODE), ENT_QUOTES, 'UTF-8') ?>)">
+                            <img src="<?= asset('img/' . $act['image']) ?>" class="w-100 h-100 object-fit-cover activity-img" alt="<?= e($act['title']) ?>">
+                            <span class="position-absolute top-0 start-0 m-3 badge bg-navy shadow-sm">
+                                <?= e($act['category_name']) ?>
+                            </span>
+                            <div class="activity-hover-overlay d-flex align-items-center justify-content-center">
+                                <span class="btn btn-light btn-sm rounded-pill px-3 shadow">
+                                    <i class="bi bi-zoom-in me-1"></i> ดูภาพกิจกรรม
+                                </span>
+                            </div>
+                        </div>
+                        <div class="p-4 d-flex flex-column flex-grow-1">
+                            <div class="d-flex justify-content-between text-muted small mb-2">
+                                <span><i class="bi bi-calendar3 me-1 text-primary"></i> <?= thai_date($act['date']) ?></span>
+                                <span><i class="bi bi-geo-alt me-1 text-danger"></i> <?= e($act['location']) ?></span>
+                            </div>
+                            <h5 class="fw-bold text-navy mb-2 line-clamp-2" style="font-size: 1.08rem;">
+                                <?= e($act['title']) ?>
+                            </h5>
+                            <p class="text-muted small flex-grow-1 line-clamp-3 mb-3">
+                                <?= e($act['description']) ?>
+                            </p>
+                            <div class="pt-2 border-top mt-auto d-flex justify-content-between align-items-center">
+                                <button type="button" class="btn btn-sm btn-link p-0 text-primary fw-semibold text-decoration-none" onclick="openActivityModal(<?= htmlspecialchars(json_encode($act, JSON_UNESCAPED_UNICODE), ENT_QUOTES, 'UTF-8') ?>)">
+                                    ชมประมวลภาพ <i class="bi bi-arrow-right ms-1"></i>
+                                </button>
+                                <span class="badge bg-light text-muted border small"><i class="bi bi-images me-1"></i> อัลบั้มภาพ</span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            <?php endforeach; ?>
+        </div>
+    </div>
+</section>
+
+<!-- Activity Lightbox Modal -->
+<div class="modal fade" id="activityModal" tabindex="-1" aria-labelledby="activityModalTitle" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered modal-lg">
+        <div class="modal-content rounded-4 shadow-lg border-0 overflow-hidden">
+            <div class="position-relative bg-dark text-center" style="max-height: 480px; overflow: hidden;">
+                <img src="" id="activityModalImg" class="img-fluid w-100" style="object-fit: cover; max-height: 480px;" alt="">
+                <button type="button" class="btn-close btn-close-white position-absolute top-0 end-0 m-3 shadow" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body p-4">
+                <div class="d-flex flex-wrap gap-2 mb-2 align-items-center">
+                    <span class="badge bg-navy px-3 py-1" id="activityModalCategory"></span>
+                    <span class="text-muted small"><i class="bi bi-calendar3 me-1 text-primary"></i> <span id="activityModalDate"></span></span>
+                    <span class="text-muted small"><i class="bi bi-geo-alt me-1 text-danger"></i> <span id="activityModalLocation"></span></span>
+                </div>
+                <h4 class="fw-bold text-navy mb-3" id="activityModalTitle"></h4>
+                <p class="text-secondary lh-lg mb-0" id="activityModalDesc"></p>
+            </div>
+            <div class="modal-footer bg-light border-0 py-3 px-4 d-flex justify-content-between">
+                <small class="text-muted"><i class="bi bi-shield-check text-success me-1"></i> สหกรณ์ออมทรัพย์สาธารณสุขระยอง จำกัด</small>
+                <button type="button" class="btn btn-secondary btn-sm px-4" data-bs-dismiss="modal">ปิดหน้าต่าง</button>
+            </div>
+        </div>
+    </div>
+</div>
+
+<script>
+function filterActivities(cat, btn) {
+    document.querySelectorAll('.filter-btn-group .btn').forEach(b => b.classList.remove('active'));
+    if (btn) btn.classList.add('active');
+
+    const items = document.querySelectorAll('.activity-item');
+    items.forEach(item => {
+        if (cat === 'all' || item.getAttribute('data-category') === cat || (cat === 'meeting' && (item.getAttribute('data-category') === 'meeting' || item.getAttribute('data-category') === 'training'))) {
+            item.style.display = 'block';
+        } else {
+            item.style.display = 'none';
+        }
+    });
+}
+
+function openActivityModal(act) {
+    if (!act) return;
+    const modalEl = document.getElementById('activityModal');
+    if (!modalEl) return;
+
+    document.getElementById('activityModalImg').src = window.APP_URL + '/assets/img/' + act.image;
+    document.getElementById('activityModalCategory').textContent = act.category_name || 'กิจกรรม';
+    document.getElementById('activityModalDate').textContent = act.date || '';
+    document.getElementById('activityModalLocation').textContent = act.location || '';
+    document.getElementById('activityModalTitle').textContent = act.title || '';
+    document.getElementById('activityModalDesc').textContent = act.description || '';
+
+    if (typeof bootstrap !== 'undefined') {
+        const modal = bootstrap.Modal.getOrCreateInstance(modalEl);
+        modal.show();
+    }
+}
+</script>
+<?php endif; ?>
+
+<!-- 8. E-Service Gateway Section -->
+<section class="py-5 bg-white">
     <div class="container-xl">
         <div class="text-center mb-5">
             <span class="text-gold fw-bold text-uppercase small"><i class="bi bi-grid me-1"></i> บริการออนไลน์</span>

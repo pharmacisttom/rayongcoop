@@ -43,8 +43,8 @@
 
     <div class="auth-card">
         <div class="auth-header">
-            <i class="bi bi-shield-lock-fill text-primary" style="font-size: 2.5rem;"></i>
-            <h4 class="fw-bold text-navy mt-2 mb-1">RayongCoop Portal</h4>
+            <img src="<?= asset('img/logo.png') ?>" alt="Logo" class="shadow-sm rounded-circle mb-2" style="width: 64px; height: 64px; object-fit: contain;">
+            <h4 class="fw-bold text-navy mt-1 mb-1">RayongCoop Portal</h4>
             <p class="text-muted small mb-0">ระบบบริหารจัดการดิจิทัล สอ.สธ.ระยอง จำกัด</p>
         </div>
         <div class="auth-body-content">

@@ -4,9 +4,7 @@
             <!-- Col 1: Coop Info -->
             <div class="col-lg-4 col-md-6">
                 <div class="d-flex align-items-center mb-3">
-                    <div class="bg-primary text-white rounded-3 p-2 me-2 d-flex align-items-center justify-content-center">
-                        <i class="bi bi-bank2 fs-4"></i>
-                    </div>
+                    <img src="<?= asset('img/logo.png') ?>" alt="<?= config('app.coop.short_name') ?>" class="me-2 shadow-sm rounded-circle" style="width: 44px; height: 44px; object-fit: contain; background: white; padding: 2px;">
                     <div>
                         <h5 class="text-white fw-bold mb-0"><?= config('app.coop.short_name') ?></h5>
                         <small class="text-light-blue"><?= config('app.coop.full_name_en') ?></small>
